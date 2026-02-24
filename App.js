@@ -93,8 +93,7 @@ function renderJobs(){
  const filtered=getFilteredJobs(); 
 
  const countLabel=document.getElementById("visible-count"); 
- countLabel.textContent= filtered.length + "job" + (filtered.length !== 1? "s" : ""); 
-
+ countLabel.textContent = filtered.length + " job" + (filtered.length !== 1 ? "s" : "");
  if(filtered.length === 0){
     container.innerHTML =emptyStateHTML();  
     return; 
@@ -140,9 +139,9 @@ const statusClass = job.status === "none" ? "status-none" : job.status === "inte
         <span>${job.salary}</span>
         </p>
 
-        <span class="status-badge ${statusClass} inline-block mt-3>${statusLabel}</span>
+        <span class="status-badge ${statusClass} inline-block mt-3">${statusLabel}</span>
 
-        <p class="text-sm text-slate-500 mt-2 leading-relaxed>${job.description}</p>
+        <p class="text-sm text-slate-500 mt-2 leading-relaxed">${job.description}</p>
 
         <div class="flex gap-2 mt-3">
         <button class="btn-interview ${interviewSelected}" onclick="setStatus(${job.id}, 'interview')">INTERVIEW</button>
@@ -156,15 +155,47 @@ const statusClass = job.status === "none" ? "status-none" : job.status === "inte
 function switchTab(tab){
     currentTab=tab; 
     document.querySelectorAll(".tab-btn").forEach(btn=>{
-        btn.classList.add("active"); 
+        btn.classList.remove("active"); 
         btn.classList.add("border-slate-200", "text-slate-500"); 
         btn.classList.remove("border-transparent"); 
     }); 
 
-    const active= document.querySelector(`[data-tab="${tab}]`); 
+    const active= document.querySelector(`[data-tab="${tab}"]`); 
     active.classList.add("active"); 
     active.classList.remove("border-slate-200", "text-slate-500"); 
     active.classList.add("border-transparent"); 
     renderJobs(); 
 }
 
+
+function setStatus(id, newStatus){
+    const job= jobs.find(j => j.id === id); 
+    if(!job)return; 
+
+    if(job.status === newStatus){
+        job.status="none"; 
+    }else{
+        job.status=newStatus; 
+    }
+
+    updateDashboard(); 
+    renderJobs(); 
+}
+
+function deleteJob(id){
+    const job= jobs.find(j=> j.id===id); 
+    if(!job)return; 
+    job.deleted= true; 
+    updateDashboard(); 
+    renderJobs(); 
+}
+
+function updateDashboard(){
+    const active= jobs.filter(j=> !j.deleted); 
+    document.getElementById("count-total").textContent = active.length; 
+    document.getElementById("count-interview").textContent= active.filter(j=> j.status === "interview").length; 
+  
+document.getElementById("count-rejected").textContent = active.filter(j => j.status === "rejected").length;
+}
+
+renderJobs(); 
