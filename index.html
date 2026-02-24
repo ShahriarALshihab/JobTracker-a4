@@ -15,9 +15,47 @@
 
         </div>
 
-        
+        <div class="grid grid-cols-3 gap-3 md: gap-5 mb-8">
+            <div class="dash-card">
+                <div class="label">
+                    Total
+                </div>
+                <div class="count text-slate-800">
+                    8
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="label">Interview</div>
+                <div class="count text-blue-600" id="count-interview">
+                    0
+                </div>
+            </div>
+
+     <div class="dash-card border-red-100">
+        <div class="label">Rejected</div>
+        <div class="count text-red-500" id="count-rejected">0</div>
+      </div>
+        </div>
 
     </div>
+
+    <div class="bg-white rounded-2xl border border-state-200 shadow-sm overflow-hidden">
+
+        <div class="flex items-center justify-between px-5 pt-5 pb-3">
+            <h2 class="text-lg font-semi-bold tracking-tight text-slate-800">Available Jobs</h2>
+        </div>
+
+    </div>
+
+    <div class="flex gap-2 px-5 pb-4">
+            <button class="tab-btn active text-sm font-semibold px-4 py-2 rounded-full borer border-transparent" data-tab="all" onclick="switchTab('all')">All</button>
+            <button class="tab-btn text-sm font-semibold px-4 py-1.5 rounded-full border border-slate-200 text-slate-500" data-tab="interview" onclick="switchTab('interview')">Interview</button>
+        <button class="tab-btn text-sm font-semibold px-4 py-1.5 rounded-full border border-slate-200 text-slate-500" data-tab="rejected" onclick="switchTab('rejected')">Rejected</button>
+
+    </div>
+
+    
     
 </body>
 </html>
